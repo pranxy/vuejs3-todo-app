@@ -7,9 +7,13 @@
     <button>Add New Todo</button>
   </form>
 
-  <div v-for="todo in todos" :key="todo.id">
-    <h3>{{ todo.content }}</h3>
-  </div>
+  <ul>
+    <li v-for="todo in todos" :key="todo.id">
+      <h3 :class="{ done: todo.done }" class="todo" @click="toggleDone(todo)">
+        {{ todo.content }}
+      </h3>
+    </li>
+  </ul>
 </template>
 
 <script>
@@ -25,13 +29,18 @@ export default {
         done: false,
         content: newTodo.value,
       });
-      console.log(newTodo.value);
+      newTodo.value = "";
+    }
+
+    function toggleDone(todo) {
+      todo.done = !todo.done;
     }
 
     return {
       todos,
       newTodo,
       addNewTodo,
+      toggleDone,
     };
   },
 };
