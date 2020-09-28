@@ -1,21 +1,52 @@
 <template>
-  <h1>Vue 3 Todo App</h1>
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-md-8">
+        <div class="todolist">
+          <h1>Vue 3 To-Do List</h1>
 
-  <form @submit.prevent="addNewTodo">
-    <label for="">New Todo</label>
-    <input v-model="newTodo" name="newTodo" type="text" />
-    <button>Add New Todo</button>
-  </form>
-  <button @click="removeAll">Remove All</button>
-  <button @click="markAllDone">Mark All Done</button>
-  <ul>
-    <li v-for="(todo, index) in todos" :key="todo.id">
-      <h3 :class="{ done: todo.done }" class="todo" @click="toggleDone(todo)">
-        {{ todo.content }}
-      </h3>
-      <button @click="removeTodo(index)">Remove todo</button>
-    </li>
-  </ul>
+          <form @submit.prevent="addNewTodo">
+            <label for="">New Todo</label>
+            <input
+              class="form-control add-todo"
+              v-model="newTodo"
+              name="newTodo"
+              type="text"
+            />
+            <!-- <button>Add New Todo</button> -->
+          </form>
+          <div class="form-actions">
+            <button class="btn btn-danger" @click="removeAll">
+              Remove All
+            </button>
+            <button class="btn btn-success" @click="markAllDone">
+              Mark All Done
+            </button>
+          </div>
+
+          <hr v-if="todos.length > 0" />
+
+          <ul class="list-unstyled">
+            <li
+              class="ui-state-default"
+              v-for="(todo, index) in todos"
+              :key="todo.id"
+              :class="{ done: todo.done }"
+              @click="toggleDone(todo)"
+            >
+              {{ todo.content }} <span class="flex-fill"></span>
+              <button
+                class="remove-item btn btn-default btn-xs pull-right"
+                @click="removeTodo(index)"
+              >
+                <i class="far fa-trash-alt"></i>
+              </button>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
 </template>
 
 <script>
@@ -65,32 +96,41 @@ export default {
 </script>
 
 <style>
-body {
-  font-family: sans-serif;
-  padding-top: 1em;
-  padding-bottom: 1em;
-  font-size: 2em;
-  width: 80%;
-  margin: 0 auto;
+.form-actions {
+  margin-top: 10px;
+  text-align: right;
 }
 
-input,
-textarea,
-button,
-p,
-div,
-section,
-article,
-select {
-  display: "block";
-  width: 100%;
-  font-family: sans-serif;
-  font-size: 1em;
-  margin: 0.5em;
+.form-actions > *:not(:last-child) {
+  margin-right: 5px;
 }
 
-.todo {
+.todolist {
+  background-color: #fff;
+  padding: 20px 20px 10px 20px;
+  margin-top: 30px;
+}
+.todolist h1 {
+  margin: 0;
+  padding-bottom: 20px;
+  text-align: center;
+}
+
+.form-control {
+  border-radius: 0;
+}
+
+li.ui-state-default {
+  background: #fff;
+  border: none;
+  display: flex;
+  align-items: center;
+  border-bottom: 1px solid #ddd;
   cursor: pointer;
+}
+
+li.ui-state-default:last-child {
+  border-bottom: none;
 }
 
 .done {
