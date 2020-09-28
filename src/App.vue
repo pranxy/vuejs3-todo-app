@@ -6,7 +6,7 @@
     <input v-model="newTodo" name="newTodo" type="text" />
     <button>Add New Todo</button>
   </form>
-
+  <button @click="markAllDone">Mark All Done</button>
   <ul>
     <li v-for="(todo, index) in todos" :key="todo.id">
       <h3 :class="{ done: todo.done }" class="todo" @click="toggleDone(todo)">
@@ -41,12 +41,17 @@ export default {
       todos.value.splice(index, 1);
     }
 
+    function markAllDone() {
+      todos.value.forEach((todo) => (todo.done = true));
+    }
+
     return {
       todos,
       newTodo,
       addNewTodo,
       toggleDone,
       removeTodo,
+      markAllDone,
     };
   },
 };
