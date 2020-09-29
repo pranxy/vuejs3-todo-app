@@ -1,4 +1,4 @@
-# vuejs3-todo-app
+# Vue 3 To-Do list app
 
 ## Project setup
 ```
